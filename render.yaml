@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: neon-run-3d
+    runtime: static
+    branch: main
+    buildCommand: ""
+    staticPublishPath: .
+    autoDeploy: true
