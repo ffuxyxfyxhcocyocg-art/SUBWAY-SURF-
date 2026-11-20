@@ -41,9 +41,9 @@ gltfLoader.load('subway_surf_3d_jake.glb',gltf=>{
 gltfLoader.load('sub_way_surf_assets.glb',gltf=>{
  const pack=gltf.scene;pack.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;assetMeshes.push(o)}});
  // O GLB foi exportado com o percurso no eixo X e origem deslocada; alinhar ao eixo Z do runner.
- pack.rotation.y=Math.PI/2;pack.scale.setScalar(0.18);pack.updateMatrixWorld(true);
+ pack.rotation.order='YXZ';pack.rotation.set(-Math.PI/2,Math.PI/2,0);pack.scale.setScalar(0.001);pack.updateMatrixWorld(true);
  const mapBounds=new THREE.Box3().setFromObject(pack);const mapCenter=mapBounds.getCenter(new THREE.Vector3());
- pack.position.x-=mapCenter.x;pack.position.z-=mapCenter.z;pack.position.y-=mapBounds.min.y;pack.updateMatrixWorld(true);
+ pack.position.set(-mapCenter.x,-mapBounds.min.y,-mapCenter.z);pack.updateMatrixWorld(true);
  scene.add(pack);fallbackWorld.visible=false;
  console.info('Mapa GLB alinhado e exibido:',assetMeshes.length,'malhas carregadas.');
 },undefined,error=>console.warn('Pacote 3D indisponível; cenário procedural mantido.',error));
