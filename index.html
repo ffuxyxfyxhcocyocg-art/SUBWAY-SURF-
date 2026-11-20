@@ -55,7 +55,7 @@ document.querySelector('#start').onclick=()=>{if(paused){paused=false;started=tr
 document.querySelector('#pause').onclick=()=>{if(!started&&!paused)return;paused=!paused;if(paused){started=false;overlay('PAUSADO','Sua corrida está pausada.','CONTINUAR')}else{started=true;document.querySelector('#overlay').style.display='none'}};
 document.querySelectorAll('[data-a]').forEach(b=>b.onpointerdown=e=>{e.preventDefault();act(b.dataset.a)});
 let sx=0,sy=0;renderer.domElement.onpointerdown=e=>{sx=e.clientX;sy=e.clientY};renderer.domElement.onpointerup=e=>{let dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<22)return;if(Math.abs(dx)>Math.abs(dy))act(dx>0?'right':'left');else act(dy<0?'jump':'duck')};
-onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='a')act('left');if(e.key==='ArrowRight'||e.key==='d')act('right');if(e.key==='ArrowUp'||e.key===' ')act('jump');if(e.key==='ArrowDown'||e.key==='s')act('duck')};
+window.onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='a')act('left');if(e.key==='ArrowRight'||e.key==='d')act('right');if(e.key==='ArrowUp'||e.key===' ')act('jump');if(e.key==='ArrowDown'||e.key==='s')act('duck')};
 function frame(){requestAnimationFrame(frame);let dt=Math.min(clock.getDelta(),.04);if(started&&!paused){t+=dt;let speed=22+Math.min(12,meters*.015);meters+=dt*speed/3;spawn-=dt;if(spawn<=0){spawnItems();spawn=.95+Math.random()*.25}
 if(vy!==0||y>0){vy-=21*dt;y=Math.max(0,y+vy*dt);if(y===0)vy=0}if(duck>0)duck=Math.max(0,duck-dt);
 runner.position.x=THREE.MathUtils.damp(runner.position.x,lane*2.25,12,dt);runner.position.y=y;runner.scale.y=duck>0?.6:1;
