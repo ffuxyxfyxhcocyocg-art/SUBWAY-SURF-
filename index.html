@@ -41,11 +41,8 @@ gltfLoader.load('subway_surf_3d_jake.glb',gltf=>{
 gltfLoader.load('sub_way_surf_assets.glb',gltf=>{
  const pack=gltf.scene;pack.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;assetMeshes.push(o)}});
  // O GLB foi exportado com o percurso no eixo X e origem deslocada; alinhar ao eixo Z do runner.
- pack.rotation.order='YXZ';pack.rotation.set(-Math.PI/2,Math.PI/2,0);pack.scale.setScalar(0.001);pack.updateMatrixWorld(true);
- const mapBounds=new THREE.Box3().setFromObject(pack);const mapCenter=mapBounds.getCenter(new THREE.Vector3());
- pack.position.set(-mapCenter.x,-mapBounds.min.y,-mapCenter.z);pack.updateMatrixWorld(true);
- scene.add(pack);fallbackWorld.visible=false;
- console.info('Mapa GLB alinhado e exibido:',assetMeshes.length,'malhas carregadas.');
+ pack.visible=false;fallbackWorld.visible=true;
+ console.info('Pacote de props carregado; cenário de corrida mantido até receber um mapa completo.');
 },undefined,error=>console.warn('Pacote 3D indisponível; cenário procedural mantido.',error));
 let items=[],lane=0,y=0,vy=0,duck=0,started=false,paused=false,meters=0,coinCount=0,clock=new THREE.Clock(),spawn=0,t=0;
 function coin(l,z){let g=new THREE.Group(),o=new THREE.Mesh(new THREE.TorusGeometry(.31,.085,10,22),gold);o.rotation.y=Math.PI/2;g.add(o);g.position.set(l*2.25,1.2,z);scene.add(g);items.push({g,type:'coin',l})}
